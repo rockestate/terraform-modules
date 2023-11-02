@@ -133,7 +133,11 @@ variable "ingress_rules" {
     from_port       = number
     to_port         = number
     protocol        = string
-    security_groups = list(string)
+    security_groups = optional(list(string))
+    cidr_blocks     = optional(list(string))
+    description     = optional(string)
+    prefix_list_ids = optional(list(string))
+    self            = optional(bool)
   }))
 }
 
