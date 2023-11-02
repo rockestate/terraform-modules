@@ -72,7 +72,7 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
           transit_encryption = efs_volume_configuration.value.transit_encryption
           root_directory     = efs_volume_configuration.value.root_directory
           dynamic "authorization_config" {
-            for_each = efs_volume_configuration.value.authorization_config !=null ? (length(efs_volume_configuration.value.authorization_config) > 0 ? [efs_volume_configuration.value.authorization_config] : []) : []
+            for_each = efs_volume_configuration.value.authorization_config != null ? (length(efs_volume_configuration.value.authorization_config) > 0 ? [efs_volume_configuration.value.authorization_config] : []) : []
             content {
               access_point_id = authorization_config.value.access_point_id
               iam             = authorization_config.value.iam
@@ -137,6 +137,12 @@ resource "aws_ecs_service" "ecs-service" {
   }
 
   depends_on = [null_resource.alb_exists]
+
+  lifecycle {
+    ignore_changes = [
+      load_balancer,
+    ]
+  }
 }
 
 
