@@ -52,4 +52,13 @@ resource "aws_codedeploy_deployment_group" "codedeploy" {
       }
     }
   }
+
+  dynamic "trigger_configuration" {
+    for_each = var.trigger_targets
+    content {
+        trigger_events     = var.trigger_events
+        trigger_name       = "ecs-codedeploy-${var.name}-${trigger_configuration.key}"
+        trigger_target_arn = trigger_configuration.value
+    }
+  }
 }

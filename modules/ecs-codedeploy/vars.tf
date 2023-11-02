@@ -27,3 +27,13 @@ variable "deployment_type" {
 variable "deployment_option" {
   default = "WITH_TRAFFIC_CONTROL"
 }
+
+variable "trigger_events" {
+  type    = list(string)
+  default = ["DeploymentFailure", "DeploymentStart", "DeploymentSuccess", "DeploymentReady"]
+}
+
+variable "trigger_targets" {
+  type    = list(string)
+  default = []
+}

@@ -1,21 +1,18 @@
 resource "aws_iam_role" "codedeploy" {
   name = "codedeploy-${var.name}"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codedeploy.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+  assume_role_policy = data.aws_iam_policy_document.codedeploy-assume-policy.json
 }
-EOF
 
+data "aws_iam_policy_document" "codedeploy-assume-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["codedeploy.amazonaws.com"]
+    }
+  }
 }
 
 data "aws_iam_policy_document" "codedeploy-role-policy" {
