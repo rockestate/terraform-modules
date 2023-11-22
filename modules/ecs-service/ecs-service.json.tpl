@@ -44,6 +44,9 @@
                 "awslogs-region": "${aws_region}",
                 "awslogs-stream-prefix": "${container.application_name}"
             }
+      },
+      "linuxParameters": {
+          "initProcessEnabled": true
       }
     }${key+1 == length(containers)? "" : ","}
   %{ endfor ~}
