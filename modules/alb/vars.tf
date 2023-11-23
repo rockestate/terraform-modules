@@ -21,6 +21,10 @@ variable "default_target_arn" {
   default = ""
 }
 
+variable "redirect_http_to_https" {
+  default = false
+}
+
 variable "ecs_sg" {
   default = []
 }

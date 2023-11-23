@@ -46,6 +46,15 @@ locals {
       target_group_arn = var.default_target_arn
     }
   ]
+  redirect_to_https = [ 
+    {
+      type = "redirect"
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      target_group_arn = null
+    }
+  ]
 }
 resource "aws_lb_listener" "lb-https" {
   count             = var.tls ? 1 : 0
@@ -79,7 +88,11 @@ resource "aws_lb_listener" "lb-http" {
   protocol          = "HTTP"
 
   dynamic "default_action" {
-    for_each = var.default_target_arn == "" ? local.fixed_response : local.forward_response
+    for_each = var.redirect_http_to_https ? (
+      local.redirect_to_https
+    ) : (
+      var.default_target_arn == "" ? local.fixed_response : local.forward_response 
+    )
     content {
       target_group_arn = default_action.value.target_group_arn
       type             = default_action.value.type
@@ -88,6 +101,14 @@ resource "aws_lb_listener" "lb-http" {
         content {
           content_type = default_action.value.content_type
           message_body = default_action.value.message_body
+          status_code  = default_action.value.status_code
+        }
+      }
+      dynamic "redirect" {
+        for_each = default_action.value.type == "redirect" ? [1] : []
+        content {
+          port = default_action.value.port
+          protocol = default_action.value.protocol
           status_code  = default_action.value.status_code
         }
       }
