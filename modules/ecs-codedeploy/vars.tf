@@ -17,6 +17,10 @@ variable "listener_arns" {
   type = list(string)
 }
 
+variable "test_listener_arns" {
+  type = list(string)
+}
+
 variable "target_group_names" {
   type = list(string)
 }
