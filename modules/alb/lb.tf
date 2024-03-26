@@ -153,3 +153,9 @@ resource "aws_lb_listener_certificate" "alb_https_extra_certificates" {
   listener_arn    = aws_lb_listener.lb-https[0].arn
   certificate_arn = data.aws_acm_certificate.extra_certificates[each.value].arn
 }
+
+resource "aws_lb_listener_certificate" "alb_https_extra_certificates" {
+  for_each        = var.tls ? { for domain in var.extra_domains : domain => domain } : {}
+  listener_arn    = aws_lb_listener.lb-test-https[0].arn
+  certificate_arn = data.aws_acm_certificate.extra_certificates[each.value].arn
+}
