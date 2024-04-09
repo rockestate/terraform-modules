@@ -144,6 +144,10 @@ resource "aws_ecs_service" "ecs-service" {
       task_definition,
     ]
   }
+
+  tags = {
+    Name        = var.application_name
+  }
 }
 
 

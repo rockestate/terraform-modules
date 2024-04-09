@@ -24,6 +24,10 @@ data "aws_ami" "ecs" {
 
 resource "aws_ecs_cluster" "cluster" {
   name = var.cluster_name
+
+  tags = {
+    Name = var.cluster_name
+  }
 }
 
 #
@@ -36,7 +40,7 @@ resource "aws_launch_configuration" "cluster" {
   key_name             = var.ssh_key_name
   iam_instance_profile = aws_iam_instance_profile.cluster-ec2-role.id
   security_groups      = [aws_security_group.cluster.id]
-  user_data            = templatefile("${path.module}/templates/ecs_init.tpl", {
+  user_data = templatefile("${path.module}/templates/ecs_init.tpl", {
     cluster_name = var.cluster_name
   })
   lifecycle {
