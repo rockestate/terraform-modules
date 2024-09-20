@@ -44,6 +44,7 @@ locals {
       environments        = var.environments
       environment_files   = var.environment_files
       docker_labels       = {}
+      health_check        = var.health_check
     }]
   }
 }

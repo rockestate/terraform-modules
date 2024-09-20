@@ -49,7 +49,8 @@
       },
       "linuxParameters": {
           "initProcessEnabled": true
-      }
+      },
+      "healthCheck": ${jsonencode(container.health_check)}
     }${key+1 == length(containers)? "" : ","}
   %{ endfor ~}
 ]
