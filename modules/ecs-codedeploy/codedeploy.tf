@@ -43,12 +43,17 @@ resource "aws_codedeploy_deployment_group" "codedeploy" {
           listener_arns = compact(var.listener_arns)
         }
 
-        dynamic target_group {
+        dynamic "target_group" {
           for_each = var.target_group_names
           content {
             name = target_group.value
           }
         }
+
+        test_traffic_route {
+          listener_arns = compact(var.test_listener_arns)
+        }
+
       }
     }
   }
@@ -56,9 +61,9 @@ resource "aws_codedeploy_deployment_group" "codedeploy" {
   dynamic "trigger_configuration" {
     for_each = var.trigger_targets
     content {
-        trigger_events     = var.trigger_events
-        trigger_name       = "ecs-codedeploy-${var.name}-${trigger_configuration.key}"
-        trigger_target_arn = trigger_configuration.value
+      trigger_events     = var.trigger_events
+      trigger_name       = "ecs-codedeploy-${var.name}-${trigger_configuration.key}"
+      trigger_target_arn = trigger_configuration.value
     }
   }
 }
