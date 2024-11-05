@@ -44,6 +44,7 @@ locals {
       environments        = var.environments
       environment_files   = var.environment_files
       docker_labels       = {}
+      health_check        = var.health_check
     }]
   }
 }
@@ -143,6 +144,10 @@ resource "aws_ecs_service" "ecs-service" {
       load_balancer,
       task_definition,
     ]
+  }
+
+  tags = {
+    Name        = var.application_name
   }
 }
 

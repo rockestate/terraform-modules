@@ -11,12 +11,14 @@
       %{endif}
       "essential": true,
       "portmappings" : [
+        %{if container.application_port != null}
         {
           %{if container.host_port != null}
             "hostport": ${container.host_port},
           %{endif}
           "containerport": ${container.application_port}
         }
+        %{endif}
         %{ for key, additional_port in container.additional_ports ~}
         ,{
           "hostport": ${additional_port},
@@ -47,7 +49,8 @@
       },
       "linuxParameters": {
           "initProcessEnabled": true
-      }
+      },
+      "healthCheck": ${jsonencode(container.health_check)}
     }${key+1 == length(containers)? "" : ","}
   %{ endfor ~}
 ]

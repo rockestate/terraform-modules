@@ -22,4 +22,8 @@ resource "aws_ecs_cluster" "cluster" {
       }
     }
   }
+
+  tags = {
+    Name = var.cluster_name
+  }
 }

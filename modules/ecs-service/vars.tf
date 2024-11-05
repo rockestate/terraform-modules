@@ -256,3 +256,8 @@ variable "enable_execute_command" {
   type    = bool
   default = false
 }
+
+variable "health_check" {
+  type = object
+  default = null
+}
