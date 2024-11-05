@@ -41,3 +41,8 @@ variable "trigger_targets" {
   type    = list(string)
   default = []
 }
+
+variable "termination_wait_time_in_minutes" {
+  type    = number
+  default = 5
+}
