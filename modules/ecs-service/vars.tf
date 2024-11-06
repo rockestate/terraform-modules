@@ -225,11 +225,11 @@ variable "containers" {
       type  = string
     }))
     health_check = object({
-      command      = list(string)
-      interval     = number
-      retries      = number
-      timeout      = number
-      start_period = number
+      Command     = list(string)
+      Interval    = number
+      Retries     = number
+      Timeout     = number
+      StartPeriod = number
     })
   }))
 }
@@ -265,6 +265,12 @@ variable "enable_execute_command" {
 }
 
 variable "health_check" {
-  type    = map(any)
+  type = object({
+    Command     = list(string)
+    Interval    = number
+    Retries     = number
+    Timeout     = number
+    StartPeriod = number
+  })
   default = null
 }
