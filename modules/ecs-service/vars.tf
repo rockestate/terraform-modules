@@ -258,6 +258,6 @@ variable "enable_execute_command" {
 }
 
 variable "health_check" {
-  type = object
+  type = map
   default = null
 }
