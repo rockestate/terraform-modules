@@ -27,7 +27,7 @@ locals {
   template-vars = {
     aws_region = var.aws_region
     log_group  = var.log_group
-    containers = length(var.containers) > 0 ? var.containers : [{
+    containers = length(var.containers) > 0 ? var.containers : list([{
       application_name    = var.application_name
       host_port           = var.launch_type == "FARGATE" ? var.application_port : 0
       application_port    = var.application_port
@@ -45,7 +45,7 @@ locals {
       environment_files   = var.environment_files
       docker_labels       = {}
       health_check        = var.health_check
-    }]
+    }])
   }
 }
 
@@ -147,7 +147,7 @@ resource "aws_ecs_service" "ecs-service" {
   }
 
   tags = {
-    Name        = var.application_name
+    Name = var.application_name
   }
 }
 
