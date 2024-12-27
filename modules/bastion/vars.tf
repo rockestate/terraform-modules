@@ -24,9 +24,12 @@ variable "root_block_device_encryption" {
 
 variable "dns_zone_id" {
   description = "dns zone id"
+  default = ""
+  type    = string
 }
 
 variable "dns_name" {
   description = "dns entry for bastion"
   default     = ""
+  type        = string
 }
