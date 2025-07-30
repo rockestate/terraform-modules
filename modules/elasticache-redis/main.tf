@@ -29,27 +29,15 @@ resource "aws_security_group" "redis" {
   name        = "${local.name}-sg"
   description = "Security group for ${local.name}"
   vpc_id      = data.aws_vpc.this.id
+}
 
-  dynamic "ingress" {
-    for_each = var.ingress_rules
-    content {
-      from_port        = ingress.value.from_port
-      to_port          = ingress.value.to_port
-      protocol         = ingress.value.protocol
-      description      = try(ingress.value.description, "")
-      security_groups  = try(ingress.value.security_groups, [])
-      cidr_blocks      = try(ingress.value.cidr_blocks, [])
-      ipv6_cidr_blocks = try(ingress.value.ipv6_cidr_blocks, [])
-      prefix_list_ids  = try(ingress.value.prefix_list_ids, [])
-      self             = try(ingress.value.self, false)
-    }
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [data.aws_vpc.this.cidr_block]
-  }
+resource "aws_security_group_rule" "redis_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = [data.aws_vpc.this.cidr_block]
+  security_group_id = aws_security_group.redis.id
 }
 
 # Redis Cluster
