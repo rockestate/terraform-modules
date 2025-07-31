@@ -37,7 +37,7 @@ resource "aws_security_group_rule" "redis_egress" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = [data.aws_vpc.this.cidr_block]
-  security_group_id = aws_security_group.redis.id
+  security_group_id = aws_security_group.redis[0].id
 }
 
 # Redis Cluster
