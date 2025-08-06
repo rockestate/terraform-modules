@@ -78,7 +78,7 @@ resource "aws_elasticache_replication_group" "redis" {
   transit_encryption_enabled = var.transit_encryption_enabled
 
   maintenance_window         = var.maintenance_window
-  automatic_failover_enabled = true
+  automatic_failover_enabled = var.replicas_per_node_group > 1 ? true : false
   apply_immediately          = var.apply_immediately
   data_tiering_enabled       = strcontains(var.redis_node_type, "r6gd")
   auto_minor_version_upgrade = true
