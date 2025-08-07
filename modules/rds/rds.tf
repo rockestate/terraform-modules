@@ -19,6 +19,7 @@ resource "aws_db_instance" "rds" {
   multi_az               = var.multi_az
   vpc_security_group_ids = [aws_security_group.rds.id]
 
+
   storage_type                        = var.storage_type
   backup_retention_period             = var.backup_retention_period
   skip_final_snapshot                 = false
@@ -26,6 +27,8 @@ resource "aws_db_instance" "rds" {
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   storage_encrypted                   = var.at_rest_encryption ? true : false
   kms_key_id                          = var.at_rest_encryption ? aws_kms_alias.rds[0].target_key_arn : ""
+  enabled_cloudwatch_logs_exports     = var.rds_log_exports
+
 
   deletion_protection          = var.deletion_protection
   performance_insights_enabled = var.performance_insight_enabled

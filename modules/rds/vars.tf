@@ -99,3 +99,8 @@ variable "initial_snapshot_id" {
   description = "Initial (Decrypted) snapshot DB to restore from (useful for restoring from a different region or account)"
   default     = ""
 }
+variable "rds_log_exports" {
+  description = "List of RDS log exports to enable"
+  type        = list(string)
+  default     = ["postgresql", "upgrade", "error"]
+}
