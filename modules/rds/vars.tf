@@ -102,5 +102,5 @@ variable "initial_snapshot_id" {
 variable "rds_log_exports" {
   description = "List of RDS log exports to enable"
   type        = list(string)
-  default     = ["postgresql", "upgrade", "error"]
+  default     = ["postgresql", "upgrade", "iam-db-auth-error"]
 }
