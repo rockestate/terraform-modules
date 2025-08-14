@@ -144,6 +144,7 @@ resource "aws_ecs_service" "ecs-service" {
       load_balancer,
       task_definition,
       desired_count,
+      capacity_provider_strategy,
     ]
   }
 
