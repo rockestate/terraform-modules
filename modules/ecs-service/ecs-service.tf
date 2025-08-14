@@ -143,6 +143,7 @@ resource "aws_ecs_service" "ecs-service" {
     ignore_changes = [
       load_balancer,
       task_definition,
+      desired_count,
     ]
   }
 
