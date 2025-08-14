@@ -105,13 +105,6 @@ resource "aws_ecs_service" "ecs-service" {
   enable_execute_command             = var.enable_execute_command
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
 
-  dynamic "capacity_provider_strategy" {
-    for_each = var.launch_type == "CAPACITY_PROVIDER" ? tolist([var.launch_type]) : []
-    content {
-      capacity_provider = null
-    }    
-  }
-
   dynamic "load_balancer" {
     for_each = [values(aws_lb_target_group.ecs-service)[0]] // only get firsts element from the target groups. TODO: read whether it should be blue / green (currently we'll always go for blue)
     content {
