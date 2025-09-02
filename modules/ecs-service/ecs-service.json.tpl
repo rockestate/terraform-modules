@@ -32,11 +32,11 @@
           container.environments,
           {
             name  = "AWS_REGION"
-            value = var.aws_region
+            value = aws_region
           },
           {
             name  = "AWS_DEFAULT_REGION"
-            value = var.aws_region
+            value = aws_region
           },
         ])
       )},
