@@ -41,7 +41,10 @@ locals {
       dependsOn           = []
       mountpoints         = var.mountpoints
       secrets             = var.secrets
-      environments        = var.environments
+      environments        = append(var.environments, {
+        name  = "AWS_REGION"
+        value = var.aws_region
+      })
       environment_files   = var.environment_files
       docker_labels       = {}
       health_check        = var.health_check
