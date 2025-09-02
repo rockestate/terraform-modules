@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "ecs-service" {
   protocol             = var.protocol
   vpc_id               = var.vpc_id
   deregistration_delay = var.deregistration_delay
-  target_type          = var.launch_type == "FARGATE" ? "ip" : "instance"
+  target_type          = var.network_mode == "awsvpc" ? "ip" : "instance"
 
   health_check {
     healthy_threshold   = var.healthcheck_healthy_threshold
