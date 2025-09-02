@@ -41,14 +41,15 @@ locals {
       dependsOn           = []
       mountpoints         = var.mountpoints
       secrets             = var.secrets
-      environments        = flatten([var.environments, {
+      environments        = flatten([var.environments, 
+      [{
         name  = "AWS_REGION"
         value = var.aws_region
       },
       {
         name  = "AWS_DEFAULT_REGION"
         value = var.aws_region
-      },
+      }],
       ])
       environment_files   = var.environment_files
       docker_labels       = {}
