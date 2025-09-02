@@ -27,7 +27,19 @@
         %{ endfor ~}
       ],
       "secrets": ${jsonencode([for secret in container.secrets : secret])},
-      "environment":${jsonencode([for environment in container.environments : environment])},
+      "environment":${jsonencode(
+        flatten([
+          container.environments,
+          {
+            name  = "AWS_REGION"
+            value = var.aws_region
+          },
+          {
+            name  = "AWS_DEFAULT_REGION"
+            value = var.aws_region
+          },
+        ])
+      )},
       "environmentFiles":[
         %{ for envFileKey, envFile in container.environment_files ~}
         {
