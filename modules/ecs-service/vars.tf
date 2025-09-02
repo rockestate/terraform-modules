@@ -8,6 +8,10 @@ variable "launch_type" {
   default = "FARGATE"
 }
 
+variable "network_mode" {
+  default = "awsvpc"
+}
+
 variable "ecr_prefix" {
   default = ""
 }
