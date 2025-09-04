@@ -5,7 +5,11 @@ variable "aws_region" {
 }
 
 variable "launch_type" {
-  default = "EC2"
+  default = "FARGATE"
+}
+
+variable "network_mode" {
+  default = "awsvpc"
 }
 
 variable "ecr_prefix" {

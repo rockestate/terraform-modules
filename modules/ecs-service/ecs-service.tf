@@ -58,8 +58,8 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
   container_definitions    = templatefile("${path.module}/ecs-service.json.tpl", local.template-vars)
   task_role_arn            = var.task_role_arn
   execution_role_arn       = var.execution_role_arn
-  requires_compatibilities = [var.launch_type]
-  network_mode             = var.launch_type == "FARGATE" ? "awsvpc" : "bridge"
+  requires_compatibilities = var.launch_type != "CAPACITY_PROVIDER" ? [var.launch_type] : []
+  network_mode             = var.network_mode
   cpu                      = var.launch_type == "FARGATE" ? var.cpu_reservation : null
   memory                   = var.launch_type == "FARGATE" ? var.memory_reservation : null
   dynamic "volume" {
@@ -100,7 +100,7 @@ resource "aws_ecs_service" "ecs-service" {
   desired_count                      = var.desired_count
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   deployment_maximum_percent         = var.deployment_maximum_percent
-  launch_type                        = var.launch_type
+  launch_type                        = var.launch_type == "CAPACITY_PROVIDER" ? null : var.launch_type
   platform_version                   = var.launch_type == "FARGATE" ? var.platform_version : null
   enable_execute_command             = var.enable_execute_command
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
@@ -115,7 +115,7 @@ resource "aws_ecs_service" "ecs-service" {
   }
 
   dynamic "network_configuration" {
-    for_each = var.launch_type == "FARGATE" ? tolist([var.launch_type]) : []
+    for_each = var.network_mode == "awsvpc" ? tolist([var.launch_type]) : []
     content {
       security_groups = concat([aws_security_group.ecs-service.id], var.task_security_groups)
       subnets         = var.fargate_service_subnetids
@@ -144,6 +144,7 @@ resource "aws_ecs_service" "ecs-service" {
       load_balancer,
       task_definition,
       desired_count,
+      capacity_provider_strategy,
     ]
   }
 
