@@ -113,8 +113,8 @@ resource "aws_ecs_service" "ecs-service" {
       "memory"                          = "binpack"
     }
     content {
-      type  = value
-      field = key
+      type  = each.key
+      field = each.value
     }
   }
 
