@@ -113,8 +113,8 @@ resource "aws_ecs_service" "ecs-service" {
       "memory"                          = "binpack"
     }
     content {
-      type  = ordered_placement_strategy.key
-      field = ordered_placement_strategy.value
+      field  = ordered_placement_strategy.key
+      type = ordered_placement_strategy.value
     }
   }
 
