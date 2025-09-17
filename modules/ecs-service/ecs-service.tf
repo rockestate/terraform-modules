@@ -106,13 +106,16 @@ resource "aws_ecs_service" "ecs-service" {
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
 
   # Spread between AZ, and optimize resources within each AZ
-  ordered_placement_strategy {
-    field = "attribute:ecs.availability-zone"
-    type  = "spread"
-  }
-  ordered_placement_strategy {
-    field = "memory"
-    type  = "binpack"
+  # Not available for Fargate
+  dynamic "ordered_placement_strategy" {
+    for_each = var.launch_type == "FARGATE" ? {} : {
+      "attribute:ecs.availability-zone" = "spread"
+      "memory"                          = "binpack"
+    }
+    content {
+      type  = value
+      field = key
+    }
   }
 
   dynamic "load_balancer" {
