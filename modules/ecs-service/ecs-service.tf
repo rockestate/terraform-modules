@@ -62,6 +62,7 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
   network_mode             = var.network_mode
   cpu                      = var.launch_type == "FARGATE" ? var.cpu_reservation : null
   memory                   = var.launch_type == "FARGATE" ? var.memory_reservation : null
+  skip_destroy             = true
   dynamic "volume" {
     for_each = var.volumes
     content {
