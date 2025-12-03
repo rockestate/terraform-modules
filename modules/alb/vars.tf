@@ -78,3 +78,9 @@ variable "enable_deletion_protection" {
 variable "desync_mitigation_mode"  {
   default = "defensive"
 }
+
+variable "enable_mtls" {
+  description = "Enable mTLS on the ALB"
+  type        = bool
+  default     = false
+}
