@@ -82,6 +82,7 @@ resource "aws_elasticache_replication_group" "redis" {
   apply_immediately          = var.apply_immediately
   data_tiering_enabled       = strcontains(var.redis_node_type, "r6gd")
   auto_minor_version_upgrade = true
+  snapshot_retention_limit   = var.snapshot_retention_limit
 
   tags = local.tags
 

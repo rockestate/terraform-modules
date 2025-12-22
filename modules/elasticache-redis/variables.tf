@@ -91,3 +91,8 @@ variable "existing_parameter_group" {
   default     = ""
   description = "Use existing parameter group (for resources import)"
 }
+variable "snapshot_retention_limit" {
+  description = "The number of days for which ElastiCache retains automatic snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, a snapshot taken today is retained for 5 days before being deleted."
+  type        = number
+  default     = 0
+}
