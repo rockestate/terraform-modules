@@ -64,11 +64,6 @@ resource "aws_lb_listener" "lb-https" {
   ssl_policy        = var.tls_policy
   certificate_arn   = data.aws_acm_certificate.certificate[0].arn
 
-  mutual_authentication {
-    // TODO: Support "verify" mTLS mode
-    mode = var.enable_mtls ? "passthrough" : "off"
-  }
-
   dynamic "default_action" {
     for_each = var.default_target_arn == "" ? local.fixed_response : local.forward_response
     content {
