@@ -111,6 +111,35 @@ resource "aws_lb_listener" "lb-test-https" {
   }
 }
 
+resource "aws_lb_listener" "lb-mtls-https" {
+  count             = var.tls && var.enable_mtls ? 1 : 0
+  load_balancer_arn = aws_lb.lb.arn
+  port              = "8443"
+  protocol          = "HTTPS"
+  ssl_policy        = var.tls_policy
+  certificate_arn   = data.aws_acm_certificate.certificate[0].arn
+
+  mutual_authentication {
+    mode = "passthrough"
+  }
+
+  dynamic "default_action" {
+    for_each = var.default_target_arn == "" ? local.fixed_response : local.forward_response
+    content {
+      target_group_arn = default_action.value.target_group_arn
+      type             = default_action.value.type
+      dynamic "fixed_response" {
+        for_each = default_action.value.type == "fixed-response" ? [1] : []
+        content {
+          content_type = default_action.value.content_type
+          message_body = default_action.value.message_body
+          status_code  = default_action.value.status_code
+        }
+      }
+    }
+  }
+}
+
 # lb listener (http)
 resource "aws_lb_listener" "lb-http" {
   load_balancer_arn = aws_lb.lb.arn
