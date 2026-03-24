@@ -104,3 +104,8 @@ variable "rds_log_exports" {
   type        = list(string)
   default     = ["postgresql", "upgrade", "iam-db-auth-error"]
 }
+
+variable "force_snapshot_restore" {
+  description = "Force restore from snapshot even if db instance exists"
+  default     = false
+}
