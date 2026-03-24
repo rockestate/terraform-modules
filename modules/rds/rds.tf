@@ -37,7 +37,7 @@ resource "aws_db_instance" "rds" {
   snapshot_identifier = var.initial_snapshot_id != "" ? var.initial_snapshot_id : null
 
   lifecycle {
-    ignore_changes = var.force_snapshot_restore ? [] : [snapshot_identifier]
+    ignore_changes = []
   }
 
   tags = {
