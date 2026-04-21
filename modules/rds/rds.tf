@@ -23,6 +23,7 @@ resource "aws_db_instance" "rds" {
   storage_type                        = var.storage_type
   backup_retention_period             = var.backup_retention_period
   skip_final_snapshot                 = false
+  delete_automated_backups            = false
   final_snapshot_identifier           = "${var.name}-final-snapshot"
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   storage_encrypted                   = var.at_rest_encryption ? true : false
