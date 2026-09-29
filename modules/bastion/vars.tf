@@ -21,3 +21,8 @@ variable "root_block_device_encryption" {
   description = "encrypt root block device"
   default     = true
 }
+
+variable "instance_type" {
+  description = "bastion instance type"
+  default     = "t3a.nano"
+}
