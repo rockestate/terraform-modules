@@ -30,3 +30,8 @@ variable "dns_name" {
   default     = ""
   type        = string
 }
+
+variable "instance_type" {
+  description = "bastion instance type"
+  default     = "t3a.nano"
+}
