@@ -8,9 +8,6 @@ variable "vpc_id" {
 variable "subnet_id" {
   description = "subnet id to launch bastion in"
 }
-variable "instance_type" {
-  description = "bastion instance type"
-}
 variable "ingress_cidr" {
   description = "bastion ingress cidr block to allow"
 }
