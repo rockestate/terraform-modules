@@ -204,6 +204,7 @@ variable "containers" {
     ecr_url             = string
     cpu_reservation     = number
     memory_reservation  = number
+    readonly            = bool
     command             = list(string)
     links               = list(string)
     docker_labels       = map(string)

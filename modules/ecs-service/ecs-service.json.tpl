@@ -9,6 +9,9 @@
       %{if container.command != null}
         "command": ${jsonencode([for command in container.command : command])},
       %{endif}
+      %{if container.readonly == true}
+        "readonlyRootFilesystem": true,
+      %{endif}
       "essential": true,
       "portmappings" : [
         %{if container.application_port != null}
