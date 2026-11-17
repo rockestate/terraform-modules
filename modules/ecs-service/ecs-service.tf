@@ -68,7 +68,7 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
     content {
       name = volume.value.name
       dynamic "efs_volume_configuration" {
-        for_each = length(volume.value.efs_volume_configuration) > 0 ? [volume.value.efs_volume_configuration] : []
+        for_each = volume.value.efs_volume_configuration ? [volume.value.efs_volume_configuration] : []
         content {
           file_system_id     = efs_volume_configuration.value.file_system_id
           transit_encryption = efs_volume_configuration.value.transit_encryption
@@ -114,8 +114,8 @@ resource "aws_ecs_service" "ecs-service" {
       "memory"                          = "binpack"
     }
     content {
-      field  = ordered_placement_strategy.key
-      type = ordered_placement_strategy.value
+      field = ordered_placement_strategy.key
+      type  = ordered_placement_strategy.value
     }
   }
 
