@@ -12,7 +12,7 @@
       %{if container.readonly == true}
         "readonlyRootFilesystem": true,
       %{endif}
-      "essential": true,
+      "essential": ${container.essential},
       "portmappings" : [
         %{if container.application_port != null}
         {

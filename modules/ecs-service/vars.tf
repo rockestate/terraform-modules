@@ -205,6 +205,7 @@ variable "containers" {
     cpu_reservation     = number
     memory_reservation  = number
     readonly            = bool
+    essential           = bool
     command             = list(string)
     links               = list(string)
     docker_labels       = map(string)
